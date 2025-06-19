@@ -1,0 +1,432 @@
+.left {
+  outline: 2px solid var(--color-border, #c7c7c7);
+  text-align: start;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+}
+
+.card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+  grid-column: span 12;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.right {
+  width: 100%;
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.stop {
+  width: 100%;
+  border: 2px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  justify-content: space-between;
+  background-color: white;
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.edited {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(10, 63, 137, 0.1);
+}
+
+.deleteIcon {
+  width: 40px;
+  color: #ff0000;
+  cursor: pointer;
+}
+
+.deleteIcon:hover {
+  color: #cc0000;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.75rem;
+  margin-top: 3px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.pageTitle {
+  margin-bottom: 24px;
+  font-size: 28px;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 12px;
+}
+
+.twoColumnLayout {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.stopsEditorColumn {
+  flex: 1;
+  min-width: 300px;
+}
+
+.stopsListColumn {
+  flex: 1;
+  min-width: 300px;
+}
+
+.stopsContainer {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.mapPreview {
+  margin-top: 16px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mapPreview h4 {
+  padding: 10px;
+  margin: 0;
+  background-color: #f8f8f8;
+}
+
+.emptyMap {
+  height: 200px;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+  text-align: center;
+  padding: 16px;
+}
+
+.stopForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md, 12px);
+}
+
+.stopItem {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  background-color: white;
+  transition: all 0.2s ease;
+  flex-wrap: wrap;
+}
+
+.stopItem:hover {
+  border-color: #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.stopInfo {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  cursor: pointer;
+  flex-wrap: wrap;
+  min-width: 200px;
+}
+
+.stopIcon {
+  position: relative;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.stopIndex {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background-color: #3498db;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.stopDetails {
+  flex: 1;
+  min-width: 150px;
+  margin-right: 10px;
+}
+
+.stopStreet {
+  font-weight: 500;
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.stopCoordinates {
+  font-size: 13px;
+  color: #666;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.stopMapPreview {
+  flex-grow: 1;
+  height: 100px;
+  min-width: 150px;
+  margin-top: 8px;
+  margin-left: auto;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.stopActions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  align-self: flex-start;
+}
+
+.editButton,
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editButton:hover {
+  background-color: #f0f0f0;
+}
+
+.deleteButton:hover {
+  background-color: #ffeeee;
+}
+
+.inputWithHelp {
+  position: relative;
+}
+
+.inputHelp {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+}
+
+.helpIcon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #eee;
+  color: #777;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: help;
+}
+
+.helpTooltip {
+  display: none;
+  position: absolute;
+  right: 30px;
+  top: 0;
+  width: 220px;
+  background-color: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 100;
+}
+
+.helpIcon:hover + .helpTooltip {
+  display: block;
+}
+
+.inputError {
+  border-color: #e74c3c;
+}
+
+.inputErrorMessage {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.stopFormButtons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.emptyMessage {
+  text-align: center;
+  color: #888;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+}
+
+.loadingSpinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 992px) {
+  .twoColumnLayout {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .stopsEditorColumn,
+  .stopsListColumn {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .stopMapPreview {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+  }
+
+  .pageTitle {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .stopItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .stopInfo {
+    width: 100%;
+  }
+
+  .stopMapPreview {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .stopActions {
+    align-self: flex-end;
+    margin-top: -40px;
+  }
+
+  .buttonContainer {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .buttonContainer button {
+    width: 100%;
+  }
+
+  .buttonContainer {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .stopFormButtons .buttonContainer {
+    flex-direction: column;
+  }
+
+  .left {
+    padding: 10px;
+  }
+
+  .inputHelp {
+    right: 0px;
+  }
+
+  .helpTooltip {
+    right: auto;
+    left: -60px;
+    width: 200px;
+  }
+
+  .stopIcon {
+    margin-right: 8px;
+  }
+
+  .stopIcon img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .stopIndex {
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+  }
+
+  .stopDetails {
+    min-width: 0;
+    width: calc(100% - 40px);
+  }
+
+  .stopCoordinates {
+    font-size: 11px;
+  }
+}

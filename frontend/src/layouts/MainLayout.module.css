@@ -1,0 +1,11 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: var(--spacing-lg) 8%;
+}
+
+.content {
+  flex: 1;
+  background: var(--hdr-gradient);
+}

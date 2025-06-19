@@ -1,0 +1,45 @@
+.formRow {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.left {
+  width: 30%;
+  min-width: 200px;
+  font-weight: 500;
+  color: #333;
+}
+
+.right {
+  flex: 1;
+  min-width: 250px;
+}
+
+@media (max-width: 768px) {
+  .formRow {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .left {
+    width: 100%;
+    min-width: auto;
+    margin-bottom: 0.75rem;
+    font-size: 22px;
+  }
+
+  .right {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .left {
+    font-size: 20px;
+    text-align: center;
+  }
+}

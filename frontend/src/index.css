@@ -1,0 +1,28 @@
+:root {
+  --hdr-gradient: linear-gradient(360deg in oklab, #ffffff 0%, #f1f5f9 100%);
+  --sdr-gradient: linear-gradient(360deg, #fff 0%, #f1f5f9 100%);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: var(--hdr-gradient);
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh; /* Use viewport height to ensure full coverage */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#root {
+  min-height: 100vh; /* Make sure your app container also fills the screen */
+}

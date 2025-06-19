@@ -1,0 +1,46 @@
+.searchContainer {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.searchWrapper {
+  position: relative;
+  flex-grow: 1;
+}
+
+.searchIcon {
+  color: var(--color-text-light);
+}
+
+.clearButton {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  color: var(--color-text-light);
+}
+
+.addButtonWrapper {
+  flex-shrink: 0;
+  height: 48px;
+  width: 48px;
+}
+
+.addButtonLink {
+  text-decoration: none;
+  height: 100%;
+}
+
+.addButton {
+  border-radius: 8px;
+}
+
+.plusIcon {
+  font-size: 24px;
+  font-weight: bold;
+}

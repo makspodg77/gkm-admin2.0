@@ -1,0 +1,323 @@
+.container {
+  display: flex;
+  gap: 20px;
+}
+
+.left {
+  flex: 1;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.right {
+  flex: 1;
+  max-height: 600px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.emptyRoute {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  border: 2px dashed var(--color-border, #c7c7c7);
+  border-radius: var(--border-radius-md);
+}
+
+.routeStopWrapper {
+  margin-bottom: 10px;
+}
+
+.routeStop {
+  border: 2px solid var(--color-border, #c7c7c7);
+  border-radius: var(--border-radius-md);
+  background-color: white;
+  overflow: hidden;
+}
+
+.routeStopHeader {
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+  user-select: none;
+}
+
+.routeStopHeader:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.expandIcon {
+  font-size: 12px;
+  transition: transform 0.2s;
+}
+
+/* Optional: rotate arrow when expanded */
+.expandIcon.expanded {
+  transform: rotate(180deg);
+}
+
+.routeStopDetails {
+  padding: 15px;
+}
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.detailLabel {
+  flex: 1;
+}
+
+.detailValue {
+  flex: 1;
+}
+
+.stopTypeSection {
+  margin-top: 15px;
+}
+
+.stopTypeTitle {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 10px;
+}
+
+.removeButton {
+  margin-top: 15px;
+  padding: 8px 12px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  background-color: #d32f2f;
+}
+
+.stop {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stop:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mapContainer {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--border-radius-sm);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  overflow: hidden;
+}
+
+.stopNameContainer {
+  padding: 10px 15px;
+}
+
+.stopId {
+  color: #666;
+  font-size: 0.9em;
+  margin-left: 5px;
+}
+
+.noResults {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  border: 2px dashed var(--color-border, #c7c7c7);
+  border-radius: var(--border-radius-md);
+  margin: 10px 0;
+}
+
+/* Add these new styles */
+.repeatedStop {
+  border-color: var(--color-primary, #3f51b5);
+}
+
+.stopNumber {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  background-color: var(--color-primary-light, #7986cb);
+  color: white;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.repeatBadge {
+  display: inline-block;
+  margin-left: 8px;
+  color: var(--color-primary, #3f51b5);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.repeatInfo {
+  color: var(--color-primary, #3f51b5);
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.stopInfo {
+  margin-bottom: 15px;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.moveButton {
+  padding: 8px 12px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  flex: 1;
+}
+
+.moveButton:disabled {
+  background-color: #b0bec5;
+  cursor: not-allowed;
+}
+
+.moveButton:hover:not(:disabled) {
+  background-color: #1976d2;
+}
+
+.removeButton {
+  padding: 8px 12px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  flex: 1;
+}
+
+.removeButton:hover {
+  background-color: #d32f2f;
+}
+
+.stopName {
+  font-weight: bold;
+}
+
+.stopStreet {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.stopId {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 5px;
+}
+
+.alreadyInRoute {
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: var(--color-primary, #3f51b5);
+  font-weight: 500;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  font-size: 0.85rem;
+}
+
+.firstBadge {
+  color: #ff9800;
+}
+
+.lastBadge {
+  color: #f44336;
+}
+
+.optionalBadge {
+  color: #9e9e9e;
+  font-size: 0.75rem;
+}
+
+/* Add conditional styling for first/last stops */
+.routeStop.firstStop {
+  border-left: 4px solid #ff9800;
+}
+
+.routeStop.lastStop {
+  border-left: 4px solid #f44336;
+}
+
+.routeStop.optionalStop {
+  border-style: dashed;
+}
+
+.navigationButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 0 20px 20px;
+}
+
+.leftButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.rightButtons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stopsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+  flex-wrap: wrap;
+  gap: 5px;
+}

@@ -1,0 +1,68 @@
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sectionTitleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sectionIcon {
+  font-size: 24px;
+  color: var(--color-primary);
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.counter {
+  background-color: var(--color-background-alt);
+  border-radius: 14px;
+  padding: 2px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-light);
+}
+
+.refreshButton {
+  background: none;
+  border: none;
+  color: var(--color-text-light);
+  cursor: pointer;
+  padding: 5px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.refreshButton:hover {
+  color: var(--color-primary);
+}
+
+.refreshButton:disabled {
+  color: var(--color-text-light);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

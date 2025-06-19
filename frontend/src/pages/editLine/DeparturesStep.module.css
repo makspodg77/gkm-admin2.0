@@ -1,0 +1,246 @@
+.container {
+  padding: 20px;
+}
+
+.contentContainer {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.variantsColumn {
+  flex: 1;
+  max-width: 340px;
+  min-width: 280px;
+}
+
+.departuresColumn {
+  flex: 2;
+}
+
+.dayTypeSelector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.dayTypeButton {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.dayTypeButton.active {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+.dayTypeButton.hasDepartures {
+  position: relative;
+}
+
+.dayTypeButton.hasDepartures:after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #27ae60;
+}
+
+.variantsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.variantItem {
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.variantItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.selectedVariant {
+  border: 2px solid #3498db;
+  box-shadow: 0 0 0 1px #3498db;
+}
+
+.variantPreview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.variantColor {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.variantSignature {
+  font-weight: 500;
+}
+
+.defaultBadge {
+  font-size: 12px;
+  background-color: #f1c40f;
+  color: #7f6c00;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+.addDepartureForm {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.addDepartureInputGroup {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.selectedVariantInfo {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.departuresContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hourGroup {
+  margin-bottom: 10px;
+}
+
+.hourHeader {
+  font-size: 16px;
+  color: #34495e;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.hourDepartures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.departureItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+}
+
+.departureItem:hover {
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.departureTime {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  min-width: 90px;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteButton:hover {
+  background-color: #fde3e3;
+}
+
+.noDepartures {
+  text-align: center;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  color: #888;
+  font-style: italic;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.routeIndicator {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.first {
+  background-color: rgba(52, 152, 219, 0.2);
+  color: #2980b9;
+  border-left: 4px solid #3498db;
+}
+
+.second {
+  background-color: rgba(46, 204, 113, 0.2);
+  color: #27ae60;
+  border-left: 4px solid #2ecc71;
+}
+
+@media (max-width: 768px) {
+  .contentContainer {
+    flex-direction: column;
+  }
+
+  .variantsColumn {
+    max-width: 100%;
+  }
+}

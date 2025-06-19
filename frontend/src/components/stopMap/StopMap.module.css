@@ -1,0 +1,54 @@
+.mapContainerWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit; /* This inherits border-radius from parent */
+}
+
+.mapContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: inherit; /* This inherits border-radius from parent */
+}
+
+/* Canvas element needs to respect border radius */
+:global(.maplibregl-canvas-container),
+:global(.maplibregl-canvas) {
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.mapError {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  padding: 16px;
+  text-align: center;
+}
+
+.mapError p {
+  color: #d32f2f;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Style the popup */
+:global(.maplibregl-popup) {
+  max-width: 200px;
+}
+
+:global(.maplibregl-popup-content) {
+  padding: 10px;
+  border-radius: 5px;
+  font-family: sans-serif;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}

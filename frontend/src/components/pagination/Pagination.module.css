@@ -1,0 +1,55 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+  gap: 8px;
+}
+
+.paginationInfo {
+  font-size: 14px;
+  color: var(--color-text-light);
+  margin: 0 12px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.navButton {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageNumbers {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.pageButton {
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ellipsis {
+  margin: 0 4px;
+  color: var(--color-text-light);
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    gap: 4px;
+  }
+
+  .pageButton {
+    min-width: 32px;
+    height: 32px;
+  }
+}
