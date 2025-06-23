@@ -38,21 +38,17 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again later.",
 });
 
-// Apply rate limiting
 app.use("/api", limiter);
 
-// Public routes (no authentication required)
 app.use("/api/auth", routes.auth);
 app.use("/api-docs", swagger.serve, swagger.setup);
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-// Protected routes (authentication required)
 app.use("/api/stops", protect, routes.stops);
 app.use("/api/lines", protect, routes.lines);
 app.use("/api/line-types", protect, routes.lineTypes);
-// Add other protected routes here
 
 app.use(
   "/api-docs",

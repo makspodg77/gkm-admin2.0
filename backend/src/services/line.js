@@ -16,9 +16,6 @@ const {
  * @returns {Object} - Dane linii w formacie API
  */
 const preprocessLineData = (lineData) => {
-  console.log("Przetwarzanie danych linii...", JSON.stringify(lineData.name));
-
-  // Sprawdź, czy dane są już w prawidłowym formacie API
   if (
     lineData.routes &&
     Array.isArray(lineData.routes) &&
@@ -26,37 +23,26 @@ const preprocessLineData = (lineData) => {
     lineData.routes[0].fullRoutes &&
     lineData.routes[0].fullRoutes.length > 0
   ) {
-    console.log("Dane już w formacie API, pomijam konwersję");
     return lineData;
   }
 
-  console.log("Konwertuję format UI do API...");
-
-  // Przygotuj podstawowy obiekt API
   const apiData = {
     name: lineData.name,
     lineTypeId: parseInt(lineData.lineTypeId) || lineData.lineTypeId,
     routes: [],
   };
 
-  // Pobieramy podstawowe flagi
   const isCircular =
     lineData.isCircular || lineData._ui?.routeType === "circular";
   const isNight = lineData.isNight || false;
 
-  // Dodaj trasę pierwszą (jeśli istnieje)
   if (lineData.route1Stops && lineData.route1Stops.length > 0) {
-    console.log(
-      `Przetwarzam trasę pierwszą, ${lineData.route1Stops.length} przystanków`
-    );
-
     const route1 = {
       isCircular: isCircular,
       isNight: isNight,
       fullRoutes: [
         {
           fullRoute: lineData.route1Stops.map((stop) => {
-            // Upewnij się, że stopId jest prawidłowo ustawiony
             const stopId = stop.id || stop.stopId || stop.stop_id;
             return {
               stopId: stopId,
@@ -76,11 +62,8 @@ const preprocessLineData = (lineData) => {
       ],
     };
     apiData.routes.push(route1);
-  } else {
-    console.log("Brak danych dla trasy pierwszej");
   }
 
-  // Dodaj trasę drugą (jeśli istnieje i linia nie jest okrężna)
   if (
     !isCircular &&
     (lineData.routeType === "bidirectional" ||
@@ -88,17 +71,12 @@ const preprocessLineData = (lineData) => {
     lineData.route2Stops &&
     lineData.route2Stops.length > 0
   ) {
-    console.log(
-      `Przetwarzam trasę drugą, ${lineData.route2Stops.length} przystanków`
-    );
-
     const route2 = {
       isCircular: false,
       isNight: isNight,
       fullRoutes: [
         {
           fullRoute: lineData.route2Stops.map((stop) => {
-            // Upewnij się, że stopId jest prawidłowo ustawiony
             const stopId = stop.id || stop.stopId || stop.stop_id;
             return {
               stopId: stopId,
@@ -118,11 +96,7 @@ const preprocessLineData = (lineData) => {
       ],
     };
     apiData.routes.push(route2);
-  } else {
-    console.log("Brak danych dla trasy drugiej lub linia jest okrężna");
   }
-
-  console.log(`Po konwersji: ${apiData.routes.length} tras`);
   return apiData;
 };
 
@@ -155,7 +129,6 @@ const prepareVariantsFromUI = (additionalInfo, schedules) => {
       departures: [],
     };
 
-    // Dodaj odjazdy z rozkładów
     if (schedules && Array.isArray(schedules)) {
       schedules.forEach((schedule) => {
         if (schedule.departures && Array.isArray(schedule.departures)) {
@@ -291,7 +264,6 @@ const addFullRouteBatch = async (fullRoute, routeId, transaction) => {
     throw new ValidationError("No route stops provided");
   }
 
-  // Generate sequential stopNumber values regardless of what's provided
   const valuePlaceholders = fullRoute
     .map(
       (_, index) =>
@@ -473,19 +445,14 @@ const processRouteData = async (fullRoutes, routeId, transaction) => {
       transaction
     );
 
-    // Przetwarzanie dodatkowch przystanków i odjazdów dla każdego wariantu (departureRoutes)
     for (let i = 0; i < departureRoutes.length; i++) {
       const departureRoute = departureRoutes[i];
-      const departureRouteData = fullRouteToAdd.departureRoutes[i]; // Odpowiadający obiekt z przychodzących danych
+      const departureRouteData = fullRouteToAdd.departureRoutes[i];
 
-      // Dodanie additionalStops dla konkretnego departure route
       if (
         departureRouteData.additionalStops &&
         departureRouteData.additionalStops.length > 0
       ) {
-        console.log(
-          `Dodawanie ${departureRouteData.additionalStops.length} dodatkowych przystanków dla wariantu ${departureRoute.signature}`
-        );
         const additionalStops = await addAdditionalStopBatch(
           departureRouteData.additionalStops,
           departureRoute.id,
@@ -500,9 +467,6 @@ const processRouteData = async (fullRoutes, routeId, transaction) => {
         departureRouteData.departures &&
         departureRouteData.departures.length > 0
       ) {
-        console.log(
-          `Dodawanie ${departureRouteData.departures.length} odjazdów dla wariantu ${departureRoute.signature}`
-        );
         const departures = await addTimetableDeparturesBatch(
           departureRouteData.departures,
           departureRoute.id,
@@ -543,7 +507,6 @@ const addFullLine = async (lineToAdd) => {
     throw new ValidationError("Line data is required");
   }
 
-  // Przetwórz dane wejściowe do prawidłowego formatu API
   lineToAdd = preprocessLineData(lineToAdd);
 
   if (!lineToAdd.name) {

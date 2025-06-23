@@ -1,4 +1,4 @@
-require("dotenv").config(); // Load environment variables
+require("dotenv").config();
 const lineService = require("../services/line");
 const logger = require("../utils/logger");
 
@@ -6,10 +6,9 @@ async function testAddFullLine() {
   try {
     logger.info("Starting line service test");
 
-    // Sample test data
     const testLineData = {
       name: "Test Metro Line",
-      lineTypeId: 1, // Make sure this ID exists in your line_type table
+      lineTypeId: 1,
 
       route: {
         isCircular: false,
@@ -18,10 +17,9 @@ async function testAddFullLine() {
 
       fullRoutes: [
         {
-          // First full route (outbound direction)
           fullRoute: [
             {
-              stopId: 1, // Make sure these IDs exist in your stops table
+              stopId: 1,
               stopType: {
                 isFirst: true,
                 isLast: false,
@@ -72,7 +70,6 @@ async function testAddFullLine() {
         },
 
         {
-          // Second full route (inbound direction)
           fullRoute: [
             {
               stopId: 3,
@@ -127,26 +124,21 @@ async function testAddFullLine() {
       ],
     };
 
-    // Call the service function
     logger.info("Calling addFullLine...");
     const result = await lineService.addFullLine(testLineData);
 
-    // Log the result with better error handling
     logger.info("Line created successfully:", {
       lineId: result.line.id,
       routeId: result.route.id,
     });
 
-    // Add more debugging to see what's in the results
     logger.info("Results structure:", JSON.stringify(result, null, 2));
 
-    // Better error handling when logging route details
     if (!result.results || !result.results.length) {
       logger.info("No routes were processed");
     } else {
       logger.info("Number of full routes processed:", result.results.length);
 
-      // Process each route result with error checking
       result.results.forEach((routeResult, index) => {
         logger.info(`Route ${index + 1} details:`, {
           fullRoute: routeResult.fullRoute
@@ -173,7 +165,6 @@ async function testAddFullLine() {
   }
 }
 
-// Execute the test
 (async () => {
   try {
     const result = await testAddFullLine();
@@ -184,7 +175,6 @@ async function testAddFullLine() {
   } catch (err) {
     console.error("Test failed:", err);
   } finally {
-    // Close any open connections
     process.exit();
   }
 })();

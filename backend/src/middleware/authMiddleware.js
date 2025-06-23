@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { ValidationError } = require("../utils/errorHandler");
 const { executeQuery } = require("../utils/sqlHelper");
 const logger = require("../utils/logger");
 
@@ -8,7 +7,6 @@ const logger = require("../utils/logger");
  */
 exports.protect = async (req, res, next) => {
   try {
-    // 1. Check if token exists in Authorization header
     const authHeader = req.headers.authorization;
     let token;
 
@@ -23,11 +21,9 @@ exports.protect = async (req, res, next) => {
       });
     }
 
-    // 2. Verify the token
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // 3. Check if the user still exists
       const user = await executeQuery(
         "SELECT id, username, role FROM users WHERE id = @id",
         { id: decoded.id }
@@ -40,7 +36,6 @@ exports.protect = async (req, res, next) => {
         });
       }
 
-      // 4. Add user info to request object
       req.user = {
         id: user[0].id,
         username: user[0].username,
@@ -75,7 +70,6 @@ exports.protect = async (req, res, next) => {
  */
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    // Check if user exists (should be set by protect middleware)
     if (!req.user) {
       return res.status(401).json({
         success: false,
@@ -83,7 +77,6 @@ exports.restrictTo = (...roles) => {
       });
     }
 
-    // Check if user role is allowed
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,

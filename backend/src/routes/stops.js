@@ -6,7 +6,7 @@ const {
   updateStopGroupWithStops,
   getStopsByGroupId,
   getAllStopGroups,
-  getAllStopsWithGroups, // Add this new import
+  getAllStopsWithGroups,
 } = require("../services/stop");
 
 /**

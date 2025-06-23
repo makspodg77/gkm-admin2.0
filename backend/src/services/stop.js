@@ -125,7 +125,6 @@ const updateStopGroup = async (stopGroup) => {
     OUTPUT INSERTED.*
     WHERE id = @id
   `;
-  console.log(stopGroup);
   const result = await executeQuery(query, {
     id: stopGroup.id,
     name: stopGroup.name,
@@ -148,7 +147,6 @@ const getStopsByGroupId = async (stopGroupId) => {
     throw new ValidationError("Stop group ID is required");
   }
 
-  // First, get the stop group name
   const stopGroupQuery = `
     SELECT id, name FROM stop_group
     WHERE id = @stopGroupId
@@ -160,7 +158,6 @@ const getStopsByGroupId = async (stopGroupId) => {
     throw new NotFoundError(`Stop group with ID ${stopGroupId} not found`);
   }
 
-  // Then get all stops for this group
   const stopsQuery = `
     SELECT * FROM stop
     WHERE stop_group_id = @stopGroupId
@@ -169,7 +166,6 @@ const getStopsByGroupId = async (stopGroupId) => {
 
   const stopsResult = await executeQuery(stopsQuery, { stopGroupId });
 
-  // Return both the stop group name and the stops
   return {
     id: stopGroupResult[0].id,
     name: stopGroupResult[0].name,
@@ -223,7 +219,6 @@ const addStopsToGroup = async (groupId, stops) => {
     throw new ValidationError("At least one stop is required");
   }
 
-  // Validate each stop has required fields
   for (const stop of stops) {
     if (!stop.map) {
       throw new ValidationError("Map reference is required for all stops");
@@ -233,7 +228,6 @@ const addStopsToGroup = async (groupId, stops) => {
     }
   }
 
-  // Build VALUES clause for multiple stops
   const valuePlaceholders = stops
     .map((_, index) => `(@groupId, @map${index}, @street${index})`)
     .join(", ");
@@ -271,7 +265,6 @@ const getAllStopsWithGroups = async () => {
 
   const results = await executeQuery(query);
 
-  // Transform the results to a more frontend-friendly format
   return results.map((row) => ({
     id: row.id,
     map: row.map,
@@ -304,30 +297,24 @@ const updateStopGroupWithStops = async (data) => {
     throw new ValidationError("At least one stop is required");
   }
 
-  // 1. Update the stop group name
   const updatedGroup = await updateStopGroup({ id: data.id, name: data.name });
 
-  // 2. Get existing stops for this group
   const existingStopsResult = await executeQuery(
     `SELECT id, map, street FROM stop WHERE stop_group_id = @groupId`,
     { groupId: data.id }
   );
 
-  // Create a map of existing stops by ID for quick lookup
   const existingStopsById = {};
   existingStopsResult.forEach((stop) => {
     existingStopsById[stop.id] = stop;
   });
 
-  // 3. Process stops from request - separate into updates and inserts
   const stopsToUpdate = [];
   const stopsToAdd = [];
-  const processedExistingIds = new Set(); // Track which existing stops were processed
+  const processedExistingIds = new Set();
 
-  // Process each stop from the request
   for (const stop of data.stops) {
     if (stop.id) {
-      // This is an existing stop that needs updating
       stopsToUpdate.push({
         id: stop.id,
         map: stop.coordinates || stop.map,
@@ -335,7 +322,6 @@ const updateStopGroupWithStops = async (data) => {
       });
       processedExistingIds.add(stop.id);
     } else {
-      // This is a new stop to add
       stopsToAdd.push({
         map: stop.coordinates || stop.map,
         street: stop.street,
@@ -343,58 +329,45 @@ const updateStopGroupWithStops = async (data) => {
     }
   }
 
-  // 4. Find stops that are no longer needed (but we'll check if they can be safely deleted)
   const stopsToRemove = existingStopsResult
     .filter((stop) => !processedExistingIds.has(stop.id))
     .map((stop) => stop.id);
 
-  // 5. Execute updates for existing stops
   for (const stop of stopsToUpdate) {
     try {
       await updateStop(stop);
     } catch (error) {
-      // Log error but continue with other updates
       console.error(`Failed to update stop ${stop.id}: ${error.message}`);
     }
   }
 
-  // 6. Add new stops
   let newStops = [];
   if (stopsToAdd.length > 0) {
     newStops = await addStopsToGroup(data.id, stopsToAdd);
   }
 
-  // 7. Try to safely delete stops that are no longer needed
   const safelyDeletedIds = [];
   for (const stopId of stopsToRemove) {
     try {
-      // Check if this stop is used in full_route
       const usageCheck = await executeQuery(
         `SELECT COUNT(*) as count FROM full_route WHERE stop_id = @stopId`,
         { stopId }
       );
 
-      // Only delete if not used elsewhere
       if (usageCheck[0].count === 0) {
         await executeQuery(`DELETE FROM stop WHERE id = @stopId`, { stopId });
         safelyDeletedIds.push(stopId);
-      } else {
-        console.log(
-          `Stop ${stopId} is used in full_route and cannot be deleted`
-        );
       }
     } catch (error) {
       console.error(`Failed to delete stop ${stopId}: ${error.message}`);
     }
   }
 
-  // 8. Get all current stops for this group after changes
   const updatedStopsResult = await executeQuery(
     `SELECT * FROM stop WHERE stop_group_id = @groupId ORDER BY id`,
     { groupId: data.id }
   );
 
-  // 9. Return the complete updated data
   return {
     id: updatedGroup.id,
     name: updatedGroup.name,

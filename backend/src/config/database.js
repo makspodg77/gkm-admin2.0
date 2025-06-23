@@ -1,4 +1,3 @@
-// SQL Server configuration
 const config = {
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
@@ -6,7 +5,7 @@ const config = {
   database: process.env.DB_NAME,
   options: {
     encrypt: true, // For Azure SQL
-    trustServerCertificate: process.env.NODE_ENV !== "production", // Change to true for local dev
+    trustServerCertificate: process.env.NODE_ENV !== "production",
     enableArithAbort: true,
   },
   pool: {
