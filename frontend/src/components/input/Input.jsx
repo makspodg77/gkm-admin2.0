@@ -1,68 +1,99 @@
-import React, { forwardRef } from "react";
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { debounce } from "lodash";
 import styles from "./Input.module.css";
 
-const Input = forwardRef(
-  (
-    {
-      type = "text",
-      placeholder = "",
-      value,
-      onChange,
-      width = "100%",
-      height = "48px",
-      icon,
-      label,
-      field, // Formik prop
-      form, // Formik prop
-      className, // Dodaj obsługę zewnętrznej klasy
-      ...props
-    },
-    ref
-  ) => {
-    // Extract Formik props if present
-    const fieldProps = field || {};
+const Input = forwardRef((props, ref) => {
+  const {
+    type = "text",
+    placeholder = "",
+    value,
+    onChange,
+    width = "100%",
+    height = "48px",
+    icon,
+    label,
+    field,
+    className = "",
+    debounceTime = 300,
+    ...restProps
+  } = props;
 
-    // Połącz klasy CSS - wewnętrzne i zewnętrzne
-    const containerClass = `${styles.container} ${className || ""}`;
+  const fieldProps = field || {};
+  const controlledValue = value !== undefined ? value : fieldProps.value;
+  const [internalValue, setInternalValue] = useState(controlledValue || "");
 
-    // Special case for checkbox type
-    if (type === "checkbox") {
-      return (
-        <label className={styles.checkboxContainer}>
-          <input
-            type="checkbox"
-            className={styles.checkbox}
-            checked={value !== undefined ? value : fieldProps.value}
-            onChange={onChange || fieldProps.onChange}
-            name={props.name || fieldProps.name}
-            ref={ref}
-            {...props}
-          />
-          {label && <span className={styles.checkboxLabel}>{label}</span>}
-        </label>
-      );
+  useEffect(() => {
+    if (controlledValue !== undefined && controlledValue !== internalValue) {
+      setInternalValue(controlledValue);
     }
+  }, [controlledValue]);
 
-    // Regular input
+  const debouncedHandler = useRef(
+    debounce((newValue) => {
+      const event = {
+        target: { value: newValue },
+        currentTarget: { value: newValue },
+      };
+      onChange ? onChange(event) : fieldProps.onChange?.(event);
+    }, debounceTime)
+  ).current;
+
+  const handleChange = useCallback(
+    (e) => {
+      const newValue = e.target.value;
+      setInternalValue(newValue);
+      debouncedHandler(newValue);
+    },
+    [debouncedHandler]
+  );
+
+  useEffect(() => () => debouncedHandler.cancel(), [debouncedHandler]);
+
+  if (type === "checkbox") {
     return (
-      <div className={containerClass} style={{ width, height }}>
+      <label className={styles.checkboxContainer}>
         <input
-          type={type}
-          className={styles.input}
-          placeholder={placeholder}
-          value={value !== undefined ? value : fieldProps.value}
+          type="checkbox"
+          className={styles.checkbox}
+          checked={controlledValue}
           onChange={onChange || fieldProps.onChange}
-          name={props.name || fieldProps.name}
           ref={ref}
-          style={{ width, height }}
-          {...props}
-          {...fieldProps}
+          name={restProps.name || fieldProps.name}
+          {...restProps}
         />
-        {icon && <div className={styles.icon}>{icon}</div>}
-      </div>
+        {label && <span className={styles.checkboxLabel}>{label}</span>}
+      </label>
     );
   }
-);
+
+  return (
+    <div
+      className={`${styles.container} ${className}`}
+      style={{ width, height }}
+    >
+      <input
+        type={type === "search" ? "text" : type}
+        className={styles.input}
+        placeholder={placeholder}
+        value={internalValue}
+        onChange={handleChange}
+        ref={ref}
+        style={{ width, height, WebkitAppearance: "none" }}
+        name={restProps.name || fieldProps.name}
+        autoComplete="off"
+        results="0"
+        {...restProps}
+      />
+      {icon && <div className={styles.icon}>{icon}</div>}
+    </div>
+  );
+});
 
 Input.displayName = "Input";
 

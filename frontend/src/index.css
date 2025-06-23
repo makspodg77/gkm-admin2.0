@@ -15,7 +15,7 @@ body {
   background: var(--hdr-gradient);
   background-size: cover;
   background-attachment: fixed;
-  min-height: 100vh; /* Use viewport height to ensure full coverage */
+  min-height: 100vh;
 }
 
 a {
@@ -24,5 +24,5 @@ a {
 }
 
 #root {
-  min-height: 100vh; /* Make sure your app container also fills the screen */
+  min-height: 100vh;
 }

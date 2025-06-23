@@ -15,14 +15,18 @@
 
 .clearButton {
   position: absolute;
-  right: 40px;
   top: 50%;
+  right: 40px;
   transform: translateY(-50%);
   background: none;
   border: none;
-  padding: 5px;
   cursor: pointer;
-  color: var(--color-text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  padding: 5px;
+  border-radius: 50%;
 }
 
 .addButtonWrapper {

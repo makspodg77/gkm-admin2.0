@@ -9,7 +9,7 @@ function Login() {
   const { login } = useAuth();
 
   const [formData, setFormData] = useState({
-    username: "", // Changed from email to username to match your backend
+    username: "",
     password: "",
   });
   const [error, setError] = useState("");
@@ -29,7 +29,6 @@ function Login() {
     setIsLoading(true);
 
     try {
-      // Make the actual API call to your auth endpoint
       const response = await fetch(ROUTES.AUTH.LOGIN, {
         method: "POST",
         headers: {
@@ -48,10 +47,8 @@ function Login() {
 
       const data = await response.json();
 
-      // Use the login function from AuthContext
       login(data.token, data.user, data.refreshToken);
 
-      // Navigate to the dashboard
       navigate("/");
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
@@ -63,14 +60,14 @@ function Login() {
   return (
     <div className={styles.loginPage}>
       <div className={styles.loginCard}>
-        <h1 className={styles.title}>GKM Admin</h1>
-        <h2 className={styles.subtitle}>Login</h2>
+        <h1 className={styles.title}>Goleniowska Komunikacja Miejska</h1>
+        <h2 className={styles.subtitle}>Panel Zarządzania Systemem</h2>
 
         {error && <div className={styles.error}>{error}</div>}
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formGroup}>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Nazwa użytkownika</label>
             <input
               type="text"
               id="username"
@@ -78,13 +75,13 @@ function Login() {
               value={formData.username}
               onChange={handleChange}
               required
-              placeholder="Enter your username"
+              placeholder="Wpisz nazwę użytkownika"
               autoComplete="username"
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Hasło</label>
             <input
               type="password"
               id="password"
@@ -92,7 +89,7 @@ function Login() {
               value={formData.password}
               onChange={handleChange}
               required
-              placeholder="Enter your password"
+              placeholder="Wpisz hasło"
               autoComplete="current-password"
             />
           </div>
@@ -102,7 +99,7 @@ function Login() {
             className={styles.submitButton}
             disabled={isLoading}
           >
-            {isLoading ? "Logging in..." : "Login"}
+            {isLoading ? "Logowanie..." : "Zaloguj"}
           </button>
         </form>
       </div>

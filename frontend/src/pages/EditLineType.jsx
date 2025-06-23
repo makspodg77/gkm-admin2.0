@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -70,8 +70,8 @@ const EditLineType = () => {
       LineTypeService.getOneLineType(id)
         .then((data) => {
           setInitialValues({
-            nameSingular: data.name_singular || data.nameSingular || "",
-            namePlural: data.name_plural || data.namePlural || "",
+            nameSingular: data.name_singular || "",
+            namePlural: data.name_plural || "",
             color: data.color || "#1E88E5",
           });
         })
@@ -184,6 +184,8 @@ const EditLineType = () => {
                     <div
                       className={styles.colorPreviewBox}
                       style={{ backgroundColor: values.color }}
+                      role="img"
+                      aria-label={`Podgląd koloru ${values.color} dla typu linii ${values.nameSingular}`}
                     >
                       <span
                         className={styles.previewText}

@@ -97,7 +97,6 @@ const EditStop = () => {
       setIsLoading(true);
       StopGroupService.getOneStopGroup(id)
         .then((data) => {
-          console.log(data);
           setInitialValues({
             name: data.name,
             stops: data.stops.map((stop) => {
@@ -109,9 +108,6 @@ const EditStop = () => {
               if (coordParts.length === 2) {
                 if (Math.abs(coordParts[0]) > 90) {
                   coords = swapAndFormatCoordinates(coords);
-                  console.log(
-                    `Swapped coordinates for stop ${stop.id}: ${coords}`
-                  );
                 }
               }
 
@@ -157,8 +153,6 @@ const EditStop = () => {
           };
         }),
       };
-
-      console.log("Saving data:", payload);
 
       if (isAddMode) {
         await StopGroupService.createStopGroup(payload);

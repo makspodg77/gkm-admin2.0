@@ -37,7 +37,6 @@
   font-weight: 500;
 }
 
-/* Color picker styles */
 .colorPickerContainer {
   display: flex;
   align-items: center;
@@ -45,7 +44,6 @@
   margin-bottom: 0.5rem;
 }
 
-/* Checkbox styles */
 .checkboxContainer {
   display: flex;
   align-items: center;
@@ -82,7 +80,6 @@
   margin-top: 2px;
 }
 
-/* Button container */
 .buttonContainer {
   display: flex;
   justify-content: space-between;
@@ -90,7 +87,6 @@
   padding-top: 1rem;
 }
 
-/* Route type selection */
 .radioGroup {
   display: flex;
   flex-direction: column;
@@ -118,7 +114,6 @@
   cursor: pointer;
 }
 
-/* Route type title */
 .routeTypeTitle {
   margin-bottom: 1rem;
   font-weight: 600;

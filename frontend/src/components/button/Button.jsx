@@ -10,7 +10,7 @@ const Button = ({
   fontSize = "16px",
   height,
   variant = "primary",
-  align = "center", // domyślnie center dla wszystkich przycisków
+  align = "center",
   centered = false,
   className = "",
   disabled = false,
@@ -29,59 +29,37 @@ const Button = ({
     };
   };
 
-  // Określ klasę wariantu
   let variantClass = styles.primary;
   if (variant === "secondary") variantClass = styles.secondary;
   else if (variant === "outline") variantClass = styles.outline;
-  else if (variant === "custom") variantClass = ""; // dla niestandardowych kolorów
+  else if (variant === "custom") variantClass = "";
 
-  // Określ klasę wyrównania
-  const alignmentClass = align ? styles[`align-${align}`] : "";
+  const alignClass =
+    styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`];
 
   return (
     <button
       type={type}
       onClick={onClick}
-      className={`${styles.button} ${className} ${variantClass} ${alignmentClass}`}
+      className={`${styles.button} ${variantClass} ${alignClass} ${className}`}
+      disabled={disabled}
       style={{
-        width: width || "",
-        height: height || "",
-        backgroundColor:
-          variant === "custom"
-            ? generateOutline(color, isHovered).backgroundColor
-            : "",
-        color: variant === "custom" ? generateOutline(color).color : "",
-        outline: variant === "custom" ? generateOutline(color).outline : "",
-        transition: "all 0.2s ease",
-        position: centered ? "relative" : "static",
+        width,
+        height,
+        fontSize,
+        ...(variant === "custom" && color
+          ? generateOutline(color, isHovered)
+          : {}),
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      disabled={disabled}
       title={title}
     >
-      <div
-        className={styles.children}
-        style={{
-          fontSize,
-          ...(centered
-            ? {
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-              }
-            : {}),
-        }}
-      >
-        {children}
-      </div>
+      {centered ? (
+        <div className={styles.centered}>{children}</div>
+      ) : (
+        <div className={styles.children}>{children}</div>
+      )}
     </button>
   );
 };

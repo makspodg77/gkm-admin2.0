@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.4",
     "formik": "^2.4.6",
+    "lodash": "^4.17.21",
     "maplibre-gl": "^5.4.0",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",

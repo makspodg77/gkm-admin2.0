@@ -15,7 +15,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -89,7 +89,7 @@ const Navbar = () => {
         >
           {user && (
             <div className={styles.userInfo}>
-              <span className={styles.username}>"Użytkownik"</span>
+              <span className={styles.username}>Max (Admin)</span>
             </div>
           )}
 

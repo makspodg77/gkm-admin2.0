@@ -274,7 +274,6 @@
   font-size: 0.75rem;
 }
 
-/* Add conditional styling for first/last stops */
 .routeStop.firstStop {
   border-left: 4px solid #ff9800;
 }

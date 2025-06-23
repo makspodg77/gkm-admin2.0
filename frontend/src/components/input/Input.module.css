@@ -16,13 +16,6 @@
   transition: border-color 0.2s ease;
 }
 
-.input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(10, 63, 137, 0.1);
-}
-
-/* Checkbox specific styles */
 .checkbox {
   width: 20px;
   height: 20px;

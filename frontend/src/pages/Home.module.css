@@ -20,38 +20,18 @@
 .card {
   background-color: white;
   border-radius: 12px;
-  padding: 24px;
+  padding: 24px 24px 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease;
   grid-column: span 12;
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+  overflow: hidden;
 }
 
 .card:hover {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-}
-
-.sectionHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.sectionTitleWrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.sectionIcon {
-  font-size: 24px;
-  color: var(--color-primary);
-}
-
-.sectionTitle {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
 }
 
 .counter {
@@ -68,74 +48,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.searchContainer {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
-.searchWrapper {
-  flex-grow: 1;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.searchWrapper:focus-within {
-  transform: scale(1.01);
-}
-
 .searchIcon {
   color: var(--color-gray-400);
-}
-
-.clearButton {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: var(--color-gray-400);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-}
-
-.clearButton:hover {
-  background-color: var(--color-gray-100);
-  color: var(--color-gray-700);
-}
-
-.addButtonWrapper {
-  width: 48px;
-  flex-shrink: 0;
-}
-
-.addButtonLink {
-  display: block;
-  height: 100%;
-  text-decoration: none;
-}
-
-.addButton {
-  border-radius: 8px;
-  background-color: var(--color-primary);
-  color: white;
-  transition: all 0.25s ease;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.addButton:hover {
-  background-color: var(--color-primary-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .filters {
@@ -157,15 +71,33 @@
 .itemsGrid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  grid-template-rows: repeat(6, minmax(60px, auto));
+  gap: 10px;
+  flex: 1;
+  padding: 8px;
+  min-height: 100px;
+  max-height: 300px;
+  overflow-y: auto;
+  position: relative;
+  contain: content;
+  margin: 0 -8px;
+  width: calc(100% + 16px);
 }
 
 .linesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-  gap: 12px;
+  grid-template-rows: repeat(3, auto);
+  gap: 10px;
   margin-bottom: 20px;
+  flex: 1;
+  min-height: 100px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  contain: content;
+  margin: 0 -10px;
+  width: calc(100% + 20px);
 }
 
 .itemButton {
@@ -200,52 +132,35 @@
   color: var(--color-gray-800);
 }
 
-.lineButtonContainer {
-  position: relative;
-  width: 100%;
-}
-
 .lineButton {
   width: 100%;
   aspect-ratio: 1/1;
   border-radius: 10px;
-  transition: all 0.25s ease-out;
   padding: 0;
   overflow: hidden;
   border: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.25s ease-out; /* Move transform to container */
 }
 
 .lineButton:hover {
-  transform: translateY(-5px) scale(1.03);
+  transform: translateY(-2px) scale(1.01);
   box-shadow: 0 15px 20px rgba(0, 0, 0, 0.15);
-  z-index: 1;
 }
 
-.deleteButton {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  z-index: 2;
+.lineButtonContainer {
+  position: relative;
+  transform-origin: center center;
+  transition: transform 0.25s ease-out;
 }
 
-.lineButtonContainer:hover .deleteButton {
-  opacity: 1;
+.lineButtonContainer:hover {
+  transform: translateY(-5px) scale(1.03);
 }
 
 .lineButtonContainer:hover .lineButton {
-  transform: translateY(-5px) scale(1.03);
   box-shadow: 0 15px 20px rgba(0, 0, 0, 0.15);
+  /* Remove transform from here */
 }
 
 .lineTypeBadge {
@@ -264,114 +179,30 @@
 .lineBadge {
   font-size: 24px;
   font-weight: 700;
-  color: inherit;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.1);
   transition: background-color 0.2s ease;
 }
 
-.lineButton:hover .lineBadge {
-  background-color: rgba(255, 255, 255, 0.2);
+.paginationContainer {
+  margin-top: auto;
+  padding-top: 20px;
 }
 
-.emptyState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  text-align: center;
-  color: var(--color-gray-400);
-  gap: 16px;
-}
-
-.emptyIcon {
-  color: var(--color-gray-300);
-}
-
-.lastUpdated {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--color-gray-500);
-  margin-top: 20px;
-  justify-content: flex-end;
-  border-top: 1px solid var(--color-gray-100);
-  padding-top: 12px;
-  width: 100%;
-}
-
-.updateIcon {
-  font-size: 16px;
-  color: var(--color-gray-400);
-}
-
-.refreshButton {
-  background: none;
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+.emptyStateContainer {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-gray-500);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.refreshButton:hover {
-  background-color: var(--color-gray-100);
-  color: var(--color-primary);
-}
-
-.refreshButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.spinning {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  gap: 10px;
-}
-
-.paginationInfo {
-  font-size: 14px;
-  color: #666;
-  margin: 0 10px;
-  min-width: 100px;
-  text-align: center;
 }
 
 @media (min-width: 768px) {
   .itemsGrid {
     grid-template-columns: repeat(2, 1fr);
+    max-height: 400px;
   }
 
   .linesGrid {
     grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    max-height: 400px;
   }
 }
 
@@ -386,7 +217,12 @@
   }
 
   .itemsGrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    max-height: 500px;
+  }
+
+  .linesGrid {
+    max-height: 500px;
   }
 }
 
@@ -396,7 +232,7 @@
   }
 
   .itemsGrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .linesGrid {

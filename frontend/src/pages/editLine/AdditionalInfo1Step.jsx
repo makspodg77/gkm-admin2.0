@@ -3,18 +3,14 @@ import styles from "./AdditionalInfo1Step.module.css";
 import Button from "../../components/button/Button";
 import Divider from "../../components/divider/Divider";
 import { toast } from "react-toastify";
-import Card from "../../components/card/Card";
 import Input from "../../components/input/Input";
 import { FaTrash } from "react-icons/fa";
 
 const AdditionalInfo1Step = ({
-  departureRoutes = [],
   stops = [],
   updateData,
-  onNext,
-  onPrev,
   data,
-  isReturnRoute = false, // Dodaj nowy prop
+  isReturnRoute = false,
 }) => {
   const [localStops, setLocalStops] = useState(stops);
   const [displayStops, setDisplayStops] = useState([]);
@@ -40,19 +36,6 @@ const AdditionalInfo1Step = ({
   ]);
 
   useEffect(() => {
-    console.log(
-      `AdditionalInfo1Step (${
-        isReturnRoute ? "trasa powrotna" : "trasa główna"
-      }) otrzymał dane:`,
-      data
-    );
-    console.log(
-      `AdditionalInfo1Step (${
-        isReturnRoute ? "trasa powrotna" : "trasa główna"
-      }) otrzymał przystanki:`,
-      stops
-    );
-
     const stopsWithNumbers = stops.map((stop, index) => ({
       ...stop,
       stop_number: stop.stop_number || index + 1,
@@ -265,7 +248,7 @@ const AdditionalInfo1Step = ({
     setVariants([...updatedVariants]);
 
     toast.success(
-      `Przystanek ${stop.stopGroup?.name} został ${
+      `Przystanek ${stop.stop_group?.name} został ${
         isChecked ? "dodany do" : "usunięty z"
       } wariantu trasy`
     );
@@ -399,11 +382,11 @@ const AdditionalInfo1Step = ({
     return (
       <div className={styles.routePreview}>
         <div className={styles.routePath}>
-          <strong>Trasa:</strong> {displayFirstStop.stopGroup?.name || "Start"}
+          <strong>Trasa:</strong> {displayFirstStop.stop_group?.name || "Start"}
           {displayFirstStop.stop_number
             ? ` (${displayFirstStop.stop_number})`
             : ""}{" "}
-          → {displayLastStop.stopGroup?.name || "Koniec"}
+          → {displayLastStop.stop_group?.name || "Koniec"}
           {displayLastStop.stop_number
             ? ` (${displayLastStop.stop_number})`
             : ""}
@@ -420,7 +403,7 @@ const AdditionalInfo1Step = ({
               )
               .map(
                 (stop) =>
-                  `${stop.stopGroup?.name || "Brak nazwy"}${
+                  `${stop.stop_group?.name || "Brak nazwy"}${
                     stop.stop_number ? ` (${stop.stop_number})` : ""
                   }`
               )
@@ -460,29 +443,59 @@ const AdditionalInfo1Step = ({
                   <Input
                     label="Oznaczenie wariantu"
                     value={variants[selectedVariantIndex]?.signature || ""}
-                    onChange={(e) => {
+                    onInput={(e) => {
                       if (selectedVariantIndex === 0) return;
 
                       const updatedVariants = [...variants];
-                      updatedVariants[selectedVariantIndex].signature =
-                        e.target.value;
+
+                      updatedVariants[selectedVariantIndex] = {
+                        ...updatedVariants[selectedVariantIndex],
+                        signature: e.target.value,
+                      };
+
                       setVariants(updatedVariants);
+
+                      if (updateData) {
+                        updateData({
+                          variants: updatedVariants.map((v) => ({
+                            signature: v.signature,
+                            color: v.color,
+                            additionalStops: v.additionalStops,
+                            isDefault: v.isDefault,
+                          })),
+                        });
+                      }
                     }}
                     placeholder="np. #, @, !..."
                     className={styles.signatureInput}
                     disabled={selectedVariantIndex === 0}
                   />
+
                   <Input
                     type="color"
                     label="Kolor wariantu"
                     value={variants[selectedVariantIndex]?.color || "#3498db"}
-                    onChange={(e) => {
+                    onInput={(e) => {
                       if (selectedVariantIndex === 0) return;
-
                       const updatedVariants = [...variants];
-                      updatedVariants[selectedVariantIndex].color =
-                        e.target.value;
+
+                      updatedVariants[selectedVariantIndex] = {
+                        ...updatedVariants[selectedVariantIndex],
+                        color: e.target.value,
+                      };
+
                       setVariants(updatedVariants);
+
+                      if (updateData) {
+                        updateData({
+                          variants: updatedVariants.map((v) => ({
+                            signature: v.signature,
+                            color: v.color,
+                            additionalStops: v.additionalStops,
+                            isDefault: v.isDefault,
+                          })),
+                        });
+                      }
                     }}
                     className={styles.colorInput}
                     disabled={selectedVariantIndex === 0}
@@ -507,7 +520,7 @@ const AdditionalInfo1Step = ({
                       >
                         <Input
                           type="checkbox"
-                          label={`${stop.stopGroup?.name || "Brak nazwy"}${
+                          label={`${stop.stop_group?.name || "Brak nazwy"}${
                             stop.stop_number ? ` (${stop.stop_number})` : ""
                           }`}
                           checked={isStopSelected(stop.routeId)}
@@ -533,14 +546,11 @@ const AdditionalInfo1Step = ({
                       (stop) =>
                         stop.is_first === false && stop.is_last === false
                     )
-                    .map((stop) => (
-                      <div
-                        key={stop.routeId}
-                        className={styles.optionalStopItem}
-                      >
+                    .map((stop, idx) => (
+                      <div key={idx} className={styles.optionalStopItem}>
                         <Input
                           type="checkbox"
-                          label={`${stop.stopGroup?.name || "Brak nazwy"}${
+                          label={`${stop.stop_group?.name || "Brak nazwy"}${
                             stop.stop_number ? ` (${stop.stop_number})` : ""
                           }`}
                           checked={isStopSelected(stop.routeId)}
@@ -569,7 +579,7 @@ const AdditionalInfo1Step = ({
                       >
                         <Input
                           type="checkbox"
-                          label={`${stop.stopGroup?.name || "Brak nazwy"}${
+                          label={`${stop.stop_group?.name || "Brak nazwy"}${
                             stop.stop_number ? ` (${stop.stop_number})` : ""
                           }`}
                           checked={isStopSelected(stop.routeId)}
@@ -636,29 +646,6 @@ const AdditionalInfo1Step = ({
             </Button>
           </div>
         </div>
-      </div>
-
-      <Divider />
-
-      <div className={styles.navigation}>
-        <div>
-          <Button onClick={onPrev} variant="secondary">
-            Wróć
-          </Button>
-        </div>
-        <Button
-          onClick={() => {
-            if (updateData) {
-              updateData({
-                variants,
-                _stopsOverride: localStops,
-              });
-            }
-            onNext();
-          }}
-        >
-          Dalej
-        </Button>
       </div>
     </div>
   );

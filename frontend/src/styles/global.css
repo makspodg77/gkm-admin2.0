@@ -1,7 +1,6 @@
 @import "./variables.css";
 @import "./reset.css";
 
-/* Global utility classes */
 .visually-hidden {
   position: absolute;
   width: 1px;

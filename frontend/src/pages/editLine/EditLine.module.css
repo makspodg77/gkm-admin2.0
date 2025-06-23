@@ -1,8 +1,22 @@
 .card {
   background-color: white;
-  border-radius: 12px;
   padding: 24px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease;
   grid-column: span 12;
+}
+
+.navigationButtons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-gray-100);
+}
+
+.navigationButtons button:not(:first-child) {
+  margin-left: 12px;
+}
+
+.navigationButtons button:last-child {
+  margin-left: auto;
 }

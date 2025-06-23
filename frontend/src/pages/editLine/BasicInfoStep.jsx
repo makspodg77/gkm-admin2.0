@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import FormRow from "../../components/formRow/FormRow";
 import Input from "../../components/input/Input";
-import Button from "../../components/button/Button";
 import styles from "./BasicInfoStep.module.css";
 import Divider from "../../components/divider/Divider";
 
@@ -12,20 +10,12 @@ const validationSchema = Yup.object({
   lineTypeId: Yup.string().required("Typ linii jest wymagany"),
 });
 
-// Formatuj nazwę linii (dodaj prefix N dla nocnych)
-const formatLineName = (name, isNight) => {
-  if (!name) return "";
-  return isNight ? `N${name}` : name;
-};
-
-// Funkcja bezpiecznie pobierająca kolor typu linii
 const getLineTypeColor = (lineTypeId, lineTypes) => {
   if (!lineTypeId || !lineTypes || !lineTypes.length) return "#ccc";
 
   const lineType = lineTypes.find((t) => String(t.id) === String(lineTypeId));
   if (!lineType) return "#ccc";
 
-  // Sprawdź czy kolor istnieje
   return lineType.color || "#ccc";
 };
 
@@ -43,11 +33,9 @@ const BasicInfoStep = ({
     onNext();
   };
 
-  // Check if circular checkbox should be disabled
   const isCircularDisabled =
     isEditMode && (hasReturnRoute || hasAdditionalInfo2);
 
-  // Tooltip message for disabled checkbox
   const disabledTooltip = isCircularDisabled
     ? "Nie można zmienić typu linii, ponieważ trasa powrotna lub dodatkowe informacje 2 już istnieją"
     : "";
@@ -92,7 +80,7 @@ const BasicInfoStep = ({
                         }}
                       >
                         <span className={styles.lineNumberText}>
-                          {formatLineName(values.name, values.isNight)}
+                          {values.name}
                         </span>
                       </div>
                     </div>
@@ -202,17 +190,6 @@ const BasicInfoStep = ({
                 </div>
               </div>
             </FormRow>
-
-            <div className={styles.buttonContainer}>
-              <Button
-                type="button"
-                onClick={() => window.history.back()}
-                variant="secondary"
-              >
-                Anuluj
-              </Button>
-              <Button type="submit">Dalej</Button>
-            </div>
           </Form>
         );
       }}
