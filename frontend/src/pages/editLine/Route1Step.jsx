@@ -1,4 +1,11 @@
-import { useState, useEffect, useImperativeHandle, forwardRef } from "react";
+import {
+  useState,
+  useEffect,
+  useImperativeHandle,
+  forwardRef,
+  useCallback,
+  useMemo,
+} from "react";
 import styles from "./Route1Step.module.css";
 import Input from "../../components/input/Input";
 import StopMap from "../../components/stopMap/StopMap";
@@ -22,9 +29,6 @@ const Route1Step = forwardRef(
     );
 
     useEffect(() => {
-      console.log("Route1Step otrzymał dane:", data);
-      console.log("Dostępne przystanki:", stops);
-
       const initialStops = data.stops || [];
       const validatedStops = initialStops.map((stop, index) => {
         return {
@@ -41,14 +45,15 @@ const Route1Step = forwardRef(
           stop_group: {
             id: stop.stop_group?.id || stop.stop_group_id || "unknown",
             name:
-              stop.stop_group?.name || stop.stop_name || "Nieznany przystanek",
+              stop.stop_group?.name ||
+              stop.stopGroup?.name ||
+              "Nieznany przystanek",
           },
           street: stop.street || "",
           map: stop.map || "",
         };
       });
 
-      console.log("Zwalidowane przystanki:", validatedStops);
       setRoute(validatedStops);
     }, []);
 
@@ -73,18 +78,21 @@ const Route1Step = forwardRef(
     const [currentPage, setCurrentPage] = useState(1);
     const [stopsPerPage] = useState(5);
 
-    const updateRouteAndParent = (newRoute) => {
-      const routeWithNumbers = newRoute.map((stop, index) => ({
-        ...stop,
-        stop_number: index + 1,
-      }));
+    const updateRouteAndParent = useCallback(
+      (newRoute) => {
+        const routeWithNumbers = newRoute.map((stop, index) => ({
+          ...stop,
+          stop_number: index + 1,
+        }));
 
-      setRoute(routeWithNumbers);
+        setRoute(routeWithNumbers);
 
-      if (updateData) {
-        updateData({ stops: routeWithNumbers });
-      }
-    };
+        if (updateData) {
+          updateData({ stops: routeWithNumbers });
+        }
+      },
+      [updateData]
+    );
 
     useEffect(() => {
       if (route && route.length > 0) {
@@ -105,7 +113,7 @@ const Route1Step = forwardRef(
           }
         }
       }
-    }, [route]);
+    }, [route.length]);
 
     useEffect(() => {
       if (!stops) {
@@ -117,11 +125,12 @@ const Route1Step = forwardRef(
         setFilteredStops(stops);
       } else {
         const search = stopSearch.toLowerCase();
+
         const filtered = stops.filter(
           (stop) =>
-            stop.stop_group &&
-            stop.stop_group.name &&
-            stop.stop_group.name.toLowerCase().includes(search)
+            stop.stopGroup &&
+            stop.stopGroup.name &&
+            stop.stopGroup.name.toLowerCase().includes(search)
         );
         setFilteredStops(filtered);
       }
@@ -135,12 +144,27 @@ const Route1Step = forwardRef(
 
     const totalPages = Math.ceil(filteredStops.length / stopsPerPage);
 
-    const updateRouteStop = (routeId, updates) => {
-      const updatedRoute = route.map((stop) =>
-        stop.routeId === routeId ? { ...stop, ...updates } : stop
-      );
-      updateRouteAndParent(updatedRoute);
-    };
+    const updateRouteStop = useCallback(
+      (routeId, updates) => {
+        setRoute((currentRoute) => {
+          const updatedRoute = currentRoute.map((stop) =>
+            stop.routeId === routeId ? { ...stop, ...updates } : stop
+          );
+
+          const routeWithNumbers = updatedRoute.map((stop, index) => ({
+            ...stop,
+            stop_number: index + 1,
+          }));
+
+          if (updateData) {
+            updateData({ stops: routeWithNumbers });
+          }
+
+          return routeWithNumbers;
+        });
+      },
+      [updateData]
+    );
 
     const addStopToRoute = (stop) => {
       const newRouteId = lastRouteId + 1;

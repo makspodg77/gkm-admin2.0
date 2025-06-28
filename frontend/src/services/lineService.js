@@ -2,7 +2,6 @@ import { fetchWithAuth } from "./authService";
 import { ROUTES } from "./config";
 
 export const LineService = {
-  // Get all lines
   getAllLines: async () => {
     try {
       const response = await fetchWithAuth(ROUTES.LINES.GET_ALL);
@@ -13,7 +12,6 @@ export const LineService = {
     }
   },
 
-  // Get a single line by ID
   getOneLine: async (id) => {
     try {
       const response = await fetchWithAuth(ROUTES.LINES.GET_ONE(id));
@@ -24,7 +22,6 @@ export const LineService = {
     }
   },
 
-  // Update an existing line
   updateLine: async (id, updates) => {
     try {
       const response = await fetchWithAuth(ROUTES.LINES.UPDATE(id), {
@@ -38,7 +35,6 @@ export const LineService = {
     }
   },
 
-  // Create a new line
   createLine: async (newLine) => {
     try {
       const response = await fetchWithAuth(ROUTES.LINES.CREATE, {
@@ -52,14 +48,12 @@ export const LineService = {
     }
   },
 
-  // Delete a line
   deleteLine: async (lineId) => {
     try {
       const response = await fetch(`/api/lines/${lineId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          // Add authorization header if required
         },
       });
 

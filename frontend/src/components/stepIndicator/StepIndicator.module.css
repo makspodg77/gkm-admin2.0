@@ -53,13 +53,13 @@
 }
 
 .step.active .stepNumber {
-  background-color: #3f51b5; /* Make sure this is a visible color */
+  background-color: #3f51b5;
   border-color: #3f51b5;
   color: white;
 }
 
 .step.completed .stepNumber {
-  background-color: #4caf50; /* Different color for completed steps */
+  background-color: #4caf50;
   border-color: #4caf50;
   color: white;
 }

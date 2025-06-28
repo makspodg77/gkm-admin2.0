@@ -19,10 +19,8 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
 
-      // Store token in localStorage
       localStorage.setItem("token", data.token);
 
-      // Update state
       setUser(data.user);
       setIsAuthenticated(true);
       return data;
@@ -38,7 +36,6 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
-  // Check if user is logged in when app loads
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -54,7 +51,6 @@ export const AuthProvider = ({ children }) => {
           },
         });
 
-        // Better error logging
         if (!response.ok) {
           const text = await response.text();
           console.error(`API returned error ${response.status}:`, text);
@@ -73,7 +69,6 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (error) {
         console.error("Auth check failed:", error);
-        // Clear token on error
         localStorage.removeItem("token");
       } finally {
         setLoading(false);

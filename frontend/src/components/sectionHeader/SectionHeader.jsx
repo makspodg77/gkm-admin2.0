@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./SectionHeader.module.css";
 import { FaSyncAlt } from "react-icons/fa";
 

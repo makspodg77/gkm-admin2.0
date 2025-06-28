@@ -3,17 +3,16 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: inherit; /* This inherits border-radius from parent */
+  border-radius: inherit;
 }
 
 .mapContainer {
   width: 100%;
   height: 100%;
   position: relative;
-  border-radius: inherit; /* This inherits border-radius from parent */
+  border-radius: inherit;
 }
 
-/* Canvas element needs to respect border radius */
 :global(.maplibregl-canvas-container),
 :global(.maplibregl-canvas) {
   border-radius: inherit;
@@ -41,7 +40,6 @@
   margin: 0;
 }
 
-/* Style the popup */
 :global(.maplibregl-popup) {
   max-width: 200px;
 }

@@ -10,7 +10,6 @@ const SearchBar = ({
   onChange,
   onClear,
   addButtonLink,
-  addButtonTitle = "Dodaj nowy",
 }) => (
   <div className={styles.searchContainer}>
     <div className={styles.searchWrapper}>

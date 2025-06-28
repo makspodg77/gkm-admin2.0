@@ -16,7 +16,6 @@ const Breadcrumbs = () => {
     .split("/")
     .filter((segment) => segment);
 
-  // Nie pokazuj na stronie głównej
   if (location.pathname === "/") return null;
 
   return (
@@ -29,7 +28,6 @@ const Breadcrumbs = () => {
         const path = `/${pathSegments.slice(0, index + 1).join("/")}`;
         const isLast = index === pathSegments.length - 1;
 
-        // Sprawdź, czy segment to ID
         const isId = !isNaN(segment) || segment === "new";
         const label =
           routes[segment] || routes[isId ? "new" : segment] || segment;

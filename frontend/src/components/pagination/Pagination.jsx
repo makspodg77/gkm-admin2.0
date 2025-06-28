@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Pagination.module.css";
 import Button from "../button/Button";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -12,7 +11,6 @@ const Pagination = ({
 }) => {
   if (totalPages <= 1) return null;
 
-  // Generuj przyciski stron numerycznych
   const renderPageNumbers = () => {
     if (!showPageNumbers || totalPages <= 1) return null;
 
@@ -24,7 +22,6 @@ const Pagination = ({
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
 
-    // Dodaj pierwszą stronę
     if (startPage > 1) {
       pageButtons.push(
         <Button
@@ -46,7 +43,6 @@ const Pagination = ({
       }
     }
 
-    // Dodaj strony środkowe
     for (let i = startPage; i <= endPage; i++) {
       pageButtons.push(
         <Button
@@ -60,7 +56,6 @@ const Pagination = ({
       );
     }
 
-    // Dodaj ostatnią stronę
     if (endPage < totalPages) {
       if (endPage < totalPages - 1) {
         pageButtons.push(

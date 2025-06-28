@@ -89,7 +89,7 @@ const EditLine = () => {
     baseSteps.push("Informacje dodatkowe");
 
     if (!isCircular) {
-      baseSteps.push("Informacje dodatkowe 2");
+      baseSteps.push("Informacje dodatkowe (powrót)");
     }
 
     baseSteps.push("Rozkład jazdy");

@@ -272,7 +272,7 @@ const EditStop = () => {
                   id="name"
                   name="name"
                   value={values.name}
-                  onChange={handleChange}
+                  onInput={handleChange}
                   placeholder="np. Dworzec Główny"
                 />
                 <ErrorMessage
